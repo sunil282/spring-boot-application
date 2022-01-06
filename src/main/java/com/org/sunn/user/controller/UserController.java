@@ -1,16 +1,24 @@
 package com.org.sunn.user.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.org.sunn.user.entity.User;
+import com.org.sunn.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("/hello")
-    public String message(){
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable("id") Long userId){
+        return userService.getUserById(userId);
 
-        return "Hello this is first springboot";
+    }
+    @PostMapping("/")
+    public User saveUser(@RequestBody User user){
+        return  userService.saveUser(user);
+
     }
 }
